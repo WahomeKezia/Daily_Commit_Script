@@ -86,7 +86,7 @@ if __name__ == '__main__':
     while True:
         # Make a random number of commits (2-5) each day
         for _ in range(randint(2, 5)):
-            # Update the YAML file and commit the changes
+
             updated_yaml_data = update_file_to_commit()
             commit_repository(updated_yaml_data)
             # Sleep for a random time between 10 minutes to 1 hour before the next commit
