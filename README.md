@@ -1,4 +1,4 @@
-```markdown
+
 # Daily Commit Script
 
 This script automates the process of committing changes to a Git repository and pushing them to a remote repository. It updates a YAML file with the number of commits and the last update timestamp.
@@ -66,5 +66,5 @@ run.bat
 
 ## License
 MIT License
-```
+
 
