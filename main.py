@@ -1,13 +1,13 @@
 import yaml
 from datetime import datetime
-from git import Repo
+from git import Repo 
 from time import sleep
 from random import randint
 import logging
 
 # Constants
 FILE_TO_COMMIT_NAME = 'update_me.yaml'  # Name of the YAML file to update
-REPO_PATH = '/path/to/your/repo'        # Path to the local Git repository
+REPO_PATH = r'C:\Users\Hp\Desktop\Daily_Commit_Script'      # Path to the local Git repository
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
@@ -86,7 +86,7 @@ if __name__ == '__main__':
     while True:
         # Make a random number of commits (2-5) each day
         for _ in range(randint(2, 5)):
-
+            # Update the YAML file and commit the changes
             updated_yaml_data = update_file_to_commit()
             commit_repository(updated_yaml_data)
             # Sleep for a random time between 10 minutes to 1 hour before the next commit
