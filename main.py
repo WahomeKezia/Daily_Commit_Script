@@ -17,37 +17,43 @@ def update_file_to_commit():
     Updates the YAML file with:
     - The number of times it has been committed.
     - The timestamp of the last update.
-    
-    If the file doesn't exist or has invalid data, it initializes the data with default values.
+
+    If the file is missing or contains invalid data, it resets to default values.
 
     Returns:
-        dict: The updated data, including the 'UPDATE_TIMES' and 'LAST_UPDATE'.
+        dict: The updated data, including 'UPDATE_TIMES' and 'LAST_UPDATE'.
     """
     try:
-        # Attempt to read and parse the existing YAML file
-        with open(FILE_TO_COMMIT_NAME, 'r') as file:
+        # Open and read the YAML file safely
+        with open(FILE_TO_COMMIT_NAME, 'r', encoding='utf-8') as file:
             current_data = yaml.safe_load(file)
-            # Increment the update count
-            update_times = int(current_data['UPDATE_TIMES']) + 1
-            # Record the current timestamp
-            last_update = datetime.now().strftime("%A %B %d %Y at %X%p")
-    except (FileNotFoundError, KeyError, TypeError, ValueError):
-        # Handle cases where the file doesn't exist or has malformed data
-        logging.warning(f"File not found or corrupted. Initializing new data.")
-        update_times = 1
-        last_update = datetime.now().strftime("%A %B %d %Y at %X%p")
-    
+
+            # Ensure it's a valid dictionary with required keys
+            if not isinstance(current_data, dict) or 'UPDATE_TIMES' not in current_data:
+                raise ValueError("Invalid YAML structure.")
+
+            # Increment commit count
+            update_times = int(current_data.get('UPDATE_TIMES', 0)) + 1
+    except (FileNotFoundError, ValueError, yaml.YAMLError):
+        logging.warning(f"⚠️ YAML file is missing or corrupted. Resetting data.")
+        update_times = 1  # Reset count
+
+    # Get current timestamp
+    last_update = datetime.now().strftime("%A %B %d %Y at %X%p")
+
     # Prepare the updated data
     updated_data = {
         'UPDATE_TIMES': update_times,
         'LAST_UPDATE': last_update
     }
-    
-    # Write the updated data back to the YAML file
-    with open(FILE_TO_COMMIT_NAME, 'w') as file:
+
+    # Write updated data to the YAML file with proper encoding
+    with open(FILE_TO_COMMIT_NAME, 'w', encoding='utf-8') as file:
         yaml.dump(updated_data, file, default_flow_style=False, sort_keys=True)
-    logging.info(f"YAML file updated with data: {updated_data}")
+
+    logging.info(f"✅ YAML file updated successfully: {updated_data}")
     return updated_data
+
 
 def commit_repository(yaml_data, repo_path=REPO_PATH):
     """
