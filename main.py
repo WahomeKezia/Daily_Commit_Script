@@ -7,7 +7,8 @@ import logging
 
 # Constants
 FILE_TO_COMMIT_NAME = 'update_me.yaml'  # Name of the YAML file to update
-REPO_PATH = r'C:\Users\Hp\Desktop\Daily_Commit_Script'      # Path to the local Git repository
+
+REPO_PATH = r'/Users/keziawahome/Desktop/Daily_Commit_Script'
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
