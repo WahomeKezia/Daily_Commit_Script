@@ -1,5 +1,5 @@
 #!/bin/bash
-set -euxo pipefail  # 🔍 This enables error tracing and debugging
+set -euxo pipefail  #  This enables error tracing and debugging
 
 echo "🔁 Starting run.sh"
 
